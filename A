@@ -1,0 +1,3081 @@
+package me.lolimez.A;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
+import org.bukkit.entity.Villager.Profession;
+import org.bukkit.entity.Witch;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class A extends JavaPlugin implements Listener {
+
+    private HashMap<Player, Integer> starterTime;
+    private HashMap<Player, BukkitRunnable> starterTask;
+
+    private HashMap<Player, Integer> farmerTime;
+    private HashMap<Player, BukkitRunnable> farmerTask;
+
+    private HashMap<Player, Integer> merchantTime;
+    private HashMap<Player, BukkitRunnable> merchantTask;
+
+    private HashMap<Player, Integer> industrialistTime;
+    private HashMap<Player, BukkitRunnable> industrialistTask;
+
+    private HashMap<Player, Integer> engineerTime;
+    private HashMap<Player, BukkitRunnable> engineerTask;
+
+    private HashMap<Player, Integer> dragonTime;
+    private HashMap<Player, BukkitRunnable> dragonTask;
+
+    private HashMap<Player, Integer> leprechaunTime;
+    private HashMap<Player, BukkitRunnable> leprechaunTask;
+
+    private HashMap<Player, Integer> ghoulTime;
+    private HashMap<Player, BukkitRunnable> ghoulTask;
+
+    private HashMap<Player, Integer> snowflakeTime;
+    private HashMap<Player, BukkitRunnable> snowflakeTask;
+
+    private HashMap<Player, BUkkitRunnable> combatTask;
+    
+    private HashMap<Player, Integer> knock1;
+    private HashMap<Player, Integer> knock2;
+    private HashMap<Player, Integer> knock3;
+    private HashMap<Player, Integer> knock4;
+    private HashMap<Player, Integer> knock5;
+    private HashMap<Player, Integer> knock6;
+    private HashMap<Player, Integer> knock7;
+    private HashMap<Player, Integer> knock8;
+    private HashMap<Player, Integer> knock9;
+    private HashMap<Player, Integer> knock10;
+    private HashMap<Player, Integer> knock11;
+    private HashMap<Player, Integer> knock12;
+    private HashMap<Player, Integer> knock12;
+    private HashMap<Player, Integer> knock14;
+    private HashMap<Player, Integer> knock15;
+    private HashMap<Player, Integer> knock16;
+    private HashMap<Player, Integer> knock17;
+    private HashMap<Player, Integer> knock18;
+    private HashMap<Player, Integer> knock19;
+    private HashMap<Player, Integer> knock20;
+    
+    private HashMap<Player, Integer> inffood;
+
+    public static File folder;
+    public static File file;
+    public static FileConfiguration perms;
+
+    @Override
+    public void onEnable() {
+
+        starterTime = new HashMap<Player, Integer>();
+        starterTask = new HashMap<Player, BukkitRunnable>();
+
+        farmerTime = new HashMap<Player, Integer>();
+        farmerTask = new HashMap<Player, BukkitRunnable>();
+
+        merchantTime = new HashMap<Player, Integer>();
+        merchantTask = new HashMap<Player, BukkitRunnable>();
+
+        industrialistTime = new HashMap<Player, Integer>();
+        industrialistTask = new HashMap<Player, BukkitRunnable>();
+
+        engineerTime = new HashMap<Player, Integer>();
+        engineerTask = new HashMap<Player, BukkitRunnable>();
+
+        snowflakeTime = new HashMap<Player, Integer>();
+        snowflakeTask = new HashMap<Player, BukkitRunnable>();
+
+        dragonTime = new HashMap<Player, Integer>();
+        dragonTask = new HashMap<Player, BukkitRunnable>();
+
+        leprechaunTime = new HashMap<Player, Integer>();
+        leprechaunTask = new HashMap<Player, BukkitRunnable>();
+
+        ghoulTime = new HashMap<Player, Integer>();
+        ghoulTask = new HashMap<Player, BukkitRunnable>();
+
+        combatTask = new HashMap<Player, BukkitRunnable>();
+        
+        knock1 = new HashMap<Player, Integer>();
+        knock2 = new HashMap<Player, Integer>();
+        knock3 = new HashMap<Player, Integer>();
+		knock4 = new HashMap<Player, Integer>();
+	    knock5 = new HashMap<Player, Integer>();
+	    knock6 = new HashMap<Player, Integer>();
+	    knock7 = new HashMap<Player, Integer>();
+	    knock8 = new HashMap<Player, Integer>();
+	    knock9 = new HashMap<Player, Integer>();
+	    knock10 = new HashMap<Player, Integer>();
+	    knock11 = new HashMap<Player, Integer>();
+	    knock12 = new HashMap<Player, Integer>();
+	    knock13 = new HashMap<Player, Integer>();
+	    knock14 = new HashMap<Player, Integer>();
+	    knock15 = new HashMap<Player, Integer>();
+	    knock16 = new HashMap<Player, Integer>();
+	    knock17 = new HashMap<Player, Integer>();
+	    knock18 = new HashMap<Player, Integer>();
+	    knock19 = new HashMap<Player, Integer>();
+	    knock20 = new HashMap<Player, Integer>();
+	    
+	    inffood = new HashMap<Player, Integer>();
+
+        Bukkit.getPluginManager().registerEvents(this, this);
+
+        folder = getDataFolder();
+
+        file = new File(folder, "permissions.yml");
+
+        perms = new YamlConfiguration();
+
+        if (folder.exists() == false) {
+
+
+            try {
+
+                folder.mkdir();
+
+            } catch (Exception e) {
+
+
+            }
+
+        }
+
+        if (file.exists() == false) {
+
+            try {
+
+                file.createNewFile();
+
+            } catch (Exception e) {
+
+
+            }
+
+        }
+
+        try {
+
+            perms.load(file);
+
+        } catch (Exception e) {
+
+
+        }
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+
+            @Override
+            public void run() {
+
+                perms = YamlConfiguration.loadConfiguration(file);
+
+            }
+
+        }, 40, 40);
+        
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+        
+            @Override
+            public void run() {
+            
+                Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "INFO " + ChatColor.GRAY + "When donating through PayPal, enter your IGN in the message box!");
+            
+            }
+        
+        }, 600, 600);
+
+    }
+
+    @Override
+    public void onDisable() {
+
+        try {
+
+            perms.save(file);
+
+        } catch (Exception e) {
+
+
+        }
+
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent e) {
+
+        Player p = e.getPlayer();
+
+        String uuid = p.getUniqueId().toString();
+
+        perms.set("PlayerInfo." + uuid, p.getName());
+
+        if (!(p.hasPlayedBefore())) {
+
+            perms.set("Rank." + uuid, 0);
+
+            perms.set("DragonKit." + uuid, 0);
+            perms.set("LeprechaunKit." + uuid, 0);
+            perms.set("GhoulKit." + uuid, 0);
+            perms.set("SnowflakeKit." + uuid, 0);
+
+            perms.set("Kills." + uuid, 0);
+            perms.set("Money." + uuid, 10000);
+
+            e.setJoinMessage(ChatColor.GRAY + "Welcome, " + ChatColor.UNDERLINE + p.getName() + ChatColor.GRAY + ", to " + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Variance Factions!");
+
+        }
+
+        if (p.hasPlayedBefore()) {
+
+            e.setJoinMessage(" ");
+
+        }
+        
+        inffood.put(p, 0);
+
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent e) {
+
+        Player p = e.getPlayer();
+
+        e.setQuitMessage(" ");
+
+    }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent e) {
+
+        Player p = e.getPlayer();
+        String uuid = p.getUniqueId().toString();
+
+        if (p.getName().equalsIgnoreCase("Mercuric")) {
+
+            e.setFormat(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "DEV " + ChatColor.BLUE + "%s" + ChatColor.GRAY + "[" + ChatColor.WHITE + perms.getInt("kills." + uuid) + ChatColor.GRAY + "] " + ChatColor.WHITE + "%s");
+
+        } else if (p.getName().equalsIgnoreCase("AllHacksNoGame")) {
+
+            e.setFormat(ChatColor.DARK_RED + "" + ChatColor.BOLD + "ANTISKID " + ChatColor.BLUE + "%s" + ChatColor.GRAY + "[" + ChatColor.WHITE + perms.getInt("kills." + uuid) + ChatColor.GRAY + "] " + ChatColor.WHITE + "%s");
+
+        } else if (perms.getInt("Rank." + p.getUniqueId().toString()) == 0) {
+
+            e.setFormat(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "MEMBER " + ChatColor.GRAY + "%s " + ChatColor.GRAY + "[" + ChatColor.WHITE + perms.getInt("kills." + uuid) + ChatColor.GRAY + "] " + ChatColor.WHITE + "%s");
+
+        } else if (perms.getInt("Rank." + p.getUniqueId().toString()) == 1) {
+
+            e.setFormat(ChatColor.GREEN + "" + ChatColor.BOLD + "FARMER " + ChatColor.GRAY + "%s " + ChatColor.GRAY + "[" + ChatColor.WHITE + perms.getInt("kills." + uuid) + ChatColor.GRAY + "] " + ChatColor.WHITE + "%s");
+
+        } else if (perms.getInt("Rank." + p.getUniqueId().toString()) == 2) {
+
+            e.setFormat(ChatColor.YELLOW + "" + ChatColor.BOLD + "MERCHANT " + ChatColor.GRAY + "%s " + ChatColor.GRAY + "[" + ChatColor.WHITE + perms.getInt("kills." + uuid) + ChatColor.GRAY + "] " + ChatColor.WHITE + "%s");
+
+        } else if (perms.getInt("Rank." + p.getUniqueId().toString()) == 3) {
+
+            e.setFormat(ChatColor.GOLD + "" + ChatColor.BOLD + "INDUSTRIALIST " + ChatColor.GRAY + "%s " + ChatColor.GRAY + "[" + ChatColor.WHITE + perms.getInt("kills." + uuid) + ChatColor.GRAY + "] " + ChatColor.WHITE + "%s");
+
+        } else if (perms.getInt("Rank." + p.getUniqueId().toString()) == 4) {
+
+            e.setFormat(ChatColor.RED + "" + ChatColor.BOLD + "ENGINEER " + ChatColor.GRAY + "%s" + ChatColor.GRAY + "[" + ChatColor.WHITE + perms.getInt("kills." + uuid) + ChatColor.GRAY + "] " + ChatColor.WHITE + "%s");
+
+        }
+
+    }
+    
+    @EventHandler
+    public void onPlayerDamage(EntityDamageByEntityEvent e) {
+    
+    	Player damagee = (Player) e.getEntity();
+    	Player damager = (Player) e.getDamager();
+    	
+    	if (damagee instanceof Player && damager instanceof Player) {
+    	
+    		if (combatTask.containsKey(damager)) {
+
+                combatTask.put(damager, new BukkitRunnable() {
+
+                    public void run() {
+
+						combatTask.remove(damager);
+						damager.sendMessage(ChatColor.WHITE + "You have " + ChatColor.DARK_PURPLE + "left" + ChatColor.WHITE + " combat.");
+
+                    }
+
+                });
+
+                combatTask.get(damager).runTaskLater(this, 600);
+    		
+    		} else {
+    		
+    			damager.sendMessage(ChatColor.WHITE + "You have " + ChatColor.DARK_PURPLE + "entered" + ChatColr.WHITE + " combat.");
+    			
+    			combatTask.put(damager, new BukkitRunnable() {
+
+                    public void run() {
+
+						combatTask.remove(damager);
+						damager.sendMessage(ChatColor.WHITE + "You have " + ChatColor.DARK_PURPLE + "left" + ChatColor.WHITE + " combat.");
+
+                    }
+
+                });
+
+                combatTask.get(damager).runTaskLater(this, 600);
+
+    		}
+    		
+    		if (combatTask.containsKey(damagee)) {
+
+                combatTask.put(damagee, new BukkitRunnable() {
+
+                    public void run() {
+
+						combatTask.remove(damagee);
+						damagee.sendMessage(ChatColor.WHITE + "You have " + ChatColor.DARK_PURPLE + "left" + ChatColor.WHITE + " combat.");
+
+                    }
+
+                });
+
+                combatTask.get(damagee).runTaskLater(this, 600);
+    		
+    		} else {
+    		
+    			damagee.sendMessage(ChatColor.WHITE + "You have " + ChatColor.DARK_PURPLE + "entered" + ChatColr.WHITE + " combat.");
+    			
+    			combatTask.put(damagee, new BukkitRunnable() {
+
+                    public void run() {
+
+						combatTask.remove(damagee);
+						damagee.sendMessage(ChatColor.WHITE + "You have " + ChatColor.DARK_PURPLE + "left" + ChatColor.WHITE + " combat.");
+
+                    }
+
+                });
+
+                combatTask.get(damagee).runTaskLater(this, 600);
+
+    		}
+    		
+    		if (p.getItemInHand().getType() == Material.DIAMOND_SWORD || p.getItemInHand().getType() == Material.IRON_SWORD || p.getItemInHand().getType() == Material.STONE_SWORD || p.getItemInHand().getType() == Material.WOOD_SWORD || p.getItemInHand().getType() == Material.GOLD_SWORD) {
+    		
+    			Random r = new Random();
+    			int randomNum = r.nextInt(100) + 1;
+    			if (randomNum <= 8) {
+    			
+    				p.sendMessage(ChatColor.GRAY + "You have been " + ChatColor.DARK_PURPLE + "pierced " + ChatColor.GRAY + "by " + damager + ". You start to bleed.");
+    			
+    			} else {
+    			
+    				return;
+    			
+    			}
+    		
+    		} else if (p.getItemInHand().getType() == Material.DIAMOND_AXE || p.getItemInHand().getType() == Material.IRON_AXE || p.getItemInHand().getType() == Material.STONE_AXE || p.getItemInHand().getType() == Material.WOOD_AXE || p.getItemInHand().getType() == Material.GOLD_AXE) {
+    		
+    			Random r = new Random();
+    			int randomNum = r.nextInt(100) + 1;
+    			if (randomNum <= 8) {
+    			
+    				p.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Stunned! " + ChatColor.GRAY + "You have been stunned by " + damager + ". Your Ender Pearl cooldown has been reset.");
+    			
+    			} else {
+    			
+    				return;
+    			
+    			}
+    		
+    		} else if (p.getItemInHand().getType() == Material.BOW) {
+    		
+    			Random r = new Random();
+    			int randomNum = r.nextInt(100) + 1;
+    			if (randomNum <= 8) {
+    			
+    				p.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Flagged! " + ChatColor.GRAY + "You have been flagged by " + damager + ". You take an extra " + ChatColor.DARK_PURPLE + "2" + ChatColor.GRAY + " damage per hit.");
+    			
+    			} else {
+    			
+    				return;
+    			
+    			}
+    		
+    		}
+
+    	} else {
+    	
+    		return;
+    	
+    	}
+    
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent e) {
+
+        Player killer = e.getEntity().getKiller();
+        Player killed = (Player) e.getEntity();
+
+        String uuid = killer.getUniqueId().toString();
+
+        if (killer instanceof Player && killed instanceof Player) {
+
+            String weapon = killer.getInventory().getItemInHand().getItemMeta().getDisplayName();
+            
+            if (killer.getItemInHand().getType() == Material.BOW) {
+
+            	e.setDeathMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "DEATH " + ChatColor.WHITE + killer.getName() + ChatColor.GRAY + "[" + ChatColor.WHITE + perms.getInt("Kills." + uuid) + ChatColor.GRAY + "] lit " + ChatColor.WHITE + killed.getName() + ChatColor.GRAY + " up using " + weapon);
+
+            } else {
+            	
+            	e.setDeathMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "DEATH " + ChatColor.WHITE + killer.getName() + ChatColor.GRAY + "[" + ChatColor.WHITE + perms.getInt("Kills." + uuid) + ChatColor.GRAY + "] has slapped " + ChatColor.WHITE + killed.getName() + ChatColor.GRAY + " up using " + weapon);
+            	
+            }
+            
+        } else {
+
+            e.setDeathMessage(" ");
+
+        }
+        
+    }
+    
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent e) {
+    	
+    	Player p = e.getPlayer();
+
+    	if (inffood.get(p) == 1) {
+    		
+    		p.setFoodLevel(20);
+    		p.setSaturation(20);
+    		
+    	} else {
+    	
+    		return;
+    	
+    	}
+
+    }
+    
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
+    	
+    	Player p = e.getPlayer();
+    	Entity ent = e.getRightClicked();
+    	String uuid = p.getUniqueId().toString();
+    	
+    	if (ent instanceof Villager) {
+    		
+    		if (((Villager) ent).getProfession() == Profession.BLACKSMITH) {
+    			
+    			if (((Villager) ent).getCustomName().equalsIgnoreCase("BoBo the Blacksmith")) {
+    			
+    				if (perms.getInt("Rank." + uuid) >= 3) {
+    				
+    					ItemStack item = p.getInventory().getItemInHand();
+    				
+    					item.setDurability(item.getType().getMaxDurability());
+    				
+    					p.playSound(p.getLocation(), Sound.ANVIL_USE, 1, 1);
+    					p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "PERMS " + ChatColor.GRAY + ChatColor.UNDERLINE + item + ChatColor.GRAY + " has been fixed.");
+
+    				} else {
+    				
+    					p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "PERMS " + ChatColor.GRAY + "You must have at least rank " + ChatColor.UNDERLINE + "Industrialist" + ChatColor.GRAY + " to do this!");
+    					p.playSound(p.getLocation(), Sound.ITEM_BREAK, 1, 1);
+    				
+    				}
+    			
+    			}
+    			
+    		} else if (((Villager) ent).getProfession() == Profession.PRIEST) {
+    			
+    			
+    			
+    		}
+    		
+    	}
+    	
+    }
+    
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e) {
+    	
+    	Player p = e.getPlayer();
+    	
+    	if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
+    		
+    		if (e.getClickedBlock().getType() == Material.CAULDRON_ITEM || e.getClickedBlock().getType() == Material.CAULDRON) {
+    			
+    			if (p.getItemInHand().getType() == Material.NETHER_WARTS) {
+    			
+    				if (e.getClickedBlock().hasMetaData("Stage1") || e.getClickedBlock().hasMetaData("Stage2") || e.getClickedBlock().hasMetaData("Stage3") || e.getClickedBlock().hasMetaData("Stage4")) {
+    				
+    					p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + " The brewing process has restarted.");
+    					e.getClickedBlock().setMetaData("Stage1", new FixedMetadataValue(this, "BrewingStage"));
+    				
+    				} else {
+
+    					Item netherwart = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.NETHER_WARTS)).setVelocity(new Vector(0, 1, 0));
+    					
+    					Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    						@Override
+    						public void run() {
+    						
+    							netherwart.remove();
+    						
+    						}
+    					
+    					}, 20);
+    					
+    					if (p.getItemInHand().getAmount() > 1) {
+    					
+    						p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    					} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    						p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    					}
+    				
+    					p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    					e.getClickedBlock().setMetaData("Stage1", new FixedMetadataValue(this, "BrewingStage"));
+    				
+    				}
+    				
+    			} else if (p.getItemInHand().getType() == Material.SUGAR || p.getItemInHand().getType() == Material.BLAZE_POWDER || p.getItemInHander().getType() == Material.SPECKLED_MELON || p.getItemInHand().getType() == Material.MAGMA_CREAM || p.getItemInHand().getType() == Material.GHAST_TEAR) {
+    			
+    				if (e.getClickedBlock().hasMetaData("Stage1")) {
+    				
+    					if (p.getItemInHand().getType() == Material.SUGAR) {
+    					
+    						Item sugar = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.SUGAR)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								sugar.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("SpeedNormal", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					} else if (p.getItemInHand().getType() == Material.BLAZE_POWDER) {
+    					
+    						Item blazepowder = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.BLAZE_POWDER)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								blaze.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("StrengthNormal", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					} else if (p.getItemInHand().getType() == Material.SPECKLED_MELON) {
+    					
+    						Item melon = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.SPECKLED_MELON)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								melon.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("HealingNormal", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					} else if (p.getItemInHand().getType() == Material.MAGMA_CREAM) {
+    					
+    						Item magmacream = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.MAGMA_CREAM)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								magmacream.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("FResNormal", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					} else if (p.getItemInHand().getType() == Material.GHAST_TEAR) {
+    					
+    						Item tear = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.GHAST_TEAR)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								tear.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("RegenNormal", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					}
+    				
+    				} else {
+    				
+    					p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "You must follow the correct brewing process! Do /brew for further information.");
+    					p.playSound(p.getLocation(), Sound.ITEM_BREAK, 1, 1);
+    					
+    				}
+    			
+    			} else if (p.getItemInHand().getType() == Material.GLOWSTONE_DUST || p.getItemInHand().getType() == Material.REDSTONE_DUST) {
+    			
+    				if (e.getClickedBlock().hasMetaData("SpeedNormal")) {
+    				
+						if (p.getItemInHand().getType() == Material.GLOWSTONE_DUST) {
+    					
+    						Item glowstonedust = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.GLOWSTONE_DUST)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								glowstonedust.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("SpeedEnhanced", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					} else if (p.getItemInHand().getType() == Material.REDSTONE_DUST) {
+    					
+    						Item redstonedust = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.REDSTONE_DUST)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								redstonedust.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("SpeedExtended", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					}
+
+    				} else if (e.getClickedBlock().hasMetaData("StrengthNormal")) {
+    				
+    					if (p.getItemInHand().getType() == Material.GLOWSTONE_DUST) {
+    					
+    						Item glowstonedust = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.GLOWSTONE_DUST)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								glowstonedust.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("StrngthEnhanced", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					} else if (p.getItemInHand().getType() == Material.REDSTONE_DUST) {
+    					
+    						Item redstonedust = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.REDSTONE_DUST)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								redstonedust.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("StrengthExtended", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					}
+    				
+    				} else if (e.getClickedBlock().hasMetaData("HealingNormal")) {
+    				
+    					if (p.getItemInHand().getType() == Material.GLOWSTONE_DUST) {
+    					
+    						Item glowstonedust = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.GLOWSTONE_DUST)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								glostonedust.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("HealingEnhanced", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					} else if (p.getItemInHand().getType() == Material.REDSTONE_DUST) {
+    					
+    						p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "You can't extend healing potions!");
+    						p.playSound(p.getLocation(), Sound.ITEM_BREAK, 1, 1);
+    					
+    					}
+    				
+    				} else if (e.getClickedBlock().hasMetaData("FResNormal")) {
+    				
+    					if (p.getItemInHand().getType() == Material.GLOWSTONE_DUST) {
+    					
+    						p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "You can only make Fire Resistance potions extended by using redstone dust!");
+    						p.playSound(p.getLocatoin(), Soud.ITEM_BREAK, 1, 1);
+    					
+    					} else if (p.geItemInHand().getType() == Material.REDSTONE_DUST) {
+    					
+    						Item redstonedust = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.REDSTONE_DUST)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								redstonedust.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("FResExtended", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					}
+    				
+    				} else if (e.getClickedBlock().hasMetaData("RegenNormal")) {
+    				
+    					if (p.getItemInHand().getType() == Material.GLOWSTONE_DUST) {
+    					
+    						Item glowstonedust = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.GLOWSTONE_DUST)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								glowstonedust.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("RegenEnhanced", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					} else if (p.getItemInHand().getType() == Material.REDSTONE_DUST) {
+    					
+    						Item redstonedust = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.REDSTONE_DUST)).setVelocity(new Vector(0, 1, 0));
+    					
+    						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    							@Override
+    							public void run() {
+    						
+    								redstonedust.remove();
+    						
+    							}
+    					
+    						}, 20);
+    						
+    						if (p.getItemInHand().getAmount() > 1) {
+    					
+    							p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    						} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    							p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    						}
+    				
+    						p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    						e.getClickedBlock().setMetaData("RegenExtended", new FixedMetadataValue(this, "BrewingStage"));
+    					
+    					}
+    				
+    				} else {
+    				
+    					p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "You must follow the correct brewing process! Do /brew for further information.");
+    					p.playSound(p.getLocation(), Sound.ITEM_BREAK, 1, 1);
+    				
+    				}
+    			
+    			} else if (p.getItemInHand().getType() == Material.SULPHUR) {
+    			
+    				if (e.getClickedBlock().hasMetaData("HealingNormal")) {
+    				
+    					Item gunpowder = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.SULPHUR)).setVelocity(new Vector(0, 1, 0));
+    					
+    					Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    						@Override
+    						public void run() {
+    						
+    							gunpowder.remove();
+    						
+    						}
+    					
+    					}, 20);
+    						
+    					if (p.getItemInHand().getAmount() > 1) {
+    					
+    						p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    					} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    						p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    					}
+    				
+    					p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    					e.getClickedBlock().setMetaData("HealingSplash", new FixedMetadataValue(this, "BrewingStage"));
+    				
+    				} else if (e.getClickedBlock().hasMetaData("HealingEnhanced")) {
+    				
+    					Item gunpowder = p.getWorld().dropItemNaturally(e.getClickedBlock().getLocation().add(0, 1, 0), new ItemStack(Material.SULPHUR)).setVelocity(new Vector(0, 1, 0));
+    					
+    					Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+    					
+    						@Override
+    						public void run() {
+    						
+    							gunpowder.remove();
+    						
+    						}
+    					
+    					}, 20);
+    						
+    					if (p.getItemInHand().getAmount() > 1) {
+    					
+    						p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    					
+    					} else if (p.getItemInHand().getAmount() == 1) {
+    					
+    						p.setItemInHand(new ItemStack(Material.AIR));
+    					
+    					}
+    				
+    					p.playSound(p.getLocation(), Sound.FIZZ, 1, 1);
+    				
+    					e.getClickedBlock().setMetaData("HealingEnhancedSplash", new FixedMetadataValue(this, "BrewingStage"));
+    				
+    				} else {
+    				
+    					p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "Only healing potions can be made splash!");
+    					p.playSound(p.getLocation(), Sound.ITEM_BREAK, 1, 1);
+    				
+    				}
+    			
+    			}
+    			
+    		}
+    		
+    	} else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+    	
+    		if (p.isSneaking()) {
+    		
+    			if (e.getClickedBlock().hasMetaData("Stage1")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "You successfully brewed an awkward potion!");
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), new ItemStack(Material.POTION, 1, (short) 16));
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("SpeedNormal")) {
+    			
+					p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack spe = new ItemStack(Material.POTION, 1, (short) 8226);
+        			PotionMeta speMeta = (PotionMeta) spe.getItemMeta();
+        			speMeta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 3600, 0), true);
+        			spe.setItemMeta(speMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), spe);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("SpeedEnhanced")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack spe = new ItemStack(Material.POTION, 1, (short) 8226);
+        			PotionMeta speMeta = (PotionMeta) spe.getItemMeta();
+        			speMeta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 4800, 1), true);
+        			spe.setItemMeta(speMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), spe);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("SpeedExtended")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack spe = new ItemStack(Material.POTION, 1, (short) 8226);
+        			PotionMeta speMeta = (PotionMeta) spe.getItemMeta();
+        			speMeta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 9600, 0), true);
+        			spe.setItemMeta(speMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), spe);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("StrengthNormal")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack str = new ItemStack(Material.POTION, 1, (short) 8233);
+        			PotionMeta strMeta = (PotionMeta) str.getItemMeta();
+        			strMeta.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 3600, 0), true);
+        			str.setItemMeta(strMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), str);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("StrengthEnhanced")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack str = new ItemStack(Material.POTION, 1, (short) 8233);
+        			PotionMeta strMeta = (PotionMeta) str.getItemMeta();
+        			strMeta.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 4800, 1), true);
+        			str.setItemMeta(strMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), str);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("StrengthExtended")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack str = new ItemStack(Material.POTION, 1, (short) 8233);
+        			PotionMeta strMeta = (PotionMeta) str.getItemMeta();
+        			strMeta.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9600, 0), true);
+        			str.setItemMeta(strMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), str);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("HealingNormal")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack hea = new ItemStack(Material.POTION, 1, (short) 8197);
+        			PotionMeta heaMeta = (PotionMeta) hea.getItemMeta();
+        			heaMeta.addCustomEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0), true);
+        			hea.setItemMeta(heaMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), hea);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("HealingSplash")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack hea = new ItemStack(Material.POTION, 1, (short) 16389);
+        			PotionMeta heaMeta = (PotionMeta) hea.getItemMeta();
+        			heaMeta.addCustomEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0), true);
+        			hea.setItemMeta(heaMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), hea);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("HealingEnhanced")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack hea = new ItemStack(Material.POTION, 1, (short) 8197);
+        			PotionMeta heaMeta = (PotionMeta) hea.getItemMeta();
+        			heaMeta.addCustomEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1), true);
+        			hea.setItemMeta(heaMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), hea);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("HealingEnhancedSplash")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack hea = new ItemStack(Material.POTION, 1, (short) 16389);
+        			PotionMeta heaMeta = (PotionMeta) hea.getItemMeta();
+        			heaMeta.addCustomEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1), true);
+        			hea.setItemMeta(heaMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), hea);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (e.getClickedBlock().hasMetaData("FResNormal")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack fres = new ItemStack(Material.POTION, 1, (short) 8195);
+        			PotionMeta fresMeta = (PotionMeta) fres.getItemMeta();
+        			fresMeta.addCustomEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 3600, 0), true);
+        			fres.setItemMeta(fresMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), fres);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (p.getClickedBlock().hasMetaData("FResExtended")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack fres = new ItemStack(Material.POTION, 1, (short) 8195);
+        			PotionMeta fresMeta = (PotionMeta) fres.getItemMeta();
+        			fresMeta.addCustomEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 9600, 0), true);
+        			fres.setItemMeta(fresMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), fres);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (p.getClickedBlock().hasMetaData("RegenNormal")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack reg = new ItemStack(Material.POTION, 1, (short) 8193);
+        			PotionMeta regMeta = (PotionMeta) reg.getItemMeta();
+        			regMeta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 3600, 0), true);
+        			reg.setItemMeta(regMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), fres);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (p.getClickedBlock().hasMetaData("RegenExtended")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack reg = new ItemStack(Material.POTION, 1, (short) 8193);
+        			PotionMeta regMeta = (PotionMeta) reg.getItemMeta();
+        			regMeta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 9600, 0), true);
+        			reg.setItemMeta(regMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), fres);
+    				potion.setPickupDelay(1);
+    			
+    			} else if (p.getClickedBlock().hasMetaData("RegenEnhanced")) {
+    			
+    				p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+    				
+    				ItemStack reg = new ItemStack(Material.POTION, 1, (short) 8193);
+        			PotionMeta regMeta = (PotionMeta) reg.getItemMeta();
+        			regMeta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 2400, 1), true);
+        			reg.setItemMeta(regMeta);
+        			
+    				Item potion = p.getWorld().dropItemNaturally(p.getLocation(), fres);
+    				potion.setPickupDelay(1);
+    			
+    			}
+    		
+    		} else if (!(p.isSneaking())) {
+    		
+    			if (p.getClickedBlock().hasMetaData("Stage1")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an awkward potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("SpeedNormal")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing a normal speed potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("SpeedEnhanced")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an enhanced speed potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("SpeedExtended")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an extended speed potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("StrengthNormal")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing a normal strength potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("StrengthEnhanced")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an enhanced strength potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("StrengthExtended")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an extended strength potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("HealingNormal")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing a normal healing potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("HealingEnhanced")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an enhanced healing potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("HealingEnhancedSplash")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an enhanced splash healing potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("FResNormal")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing a normal fire res potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("FResExtended")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an extended fire res potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("RegenNormal")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing a normal regen potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("RegenExtended")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an extended regen potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			} else if (p.getClickedBlock().hasMetaData("RegenEnhanced")) {
+    			
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "BREWING " + ChatColor.GRAY + "This cauldron is brewing an enhanced regen potion. Shift-Right-Click to retrieve this potion.");
+    			
+    			}
+    		
+    		}
+    	
+    	}
+    	
+    }
+
+    @SuppressWarnings("deprecation")
+	@EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+
+        Player p = (Player) e.getWhoClicked();
+
+        ItemStack str = new ItemStack(Material.POTION, 1, (short) 8233);
+        PotionMeta strMeta = (PotionMeta) str.getItemMeta();
+        strMeta.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 4800, 1), true);
+        str.setItemMeta(strMeta);
+        
+        ItemStack str1 = new ItemStack(Material.POTION, 2, (short) 8233);
+        PotionMeta str1Meta = (PotionMeta) str1.getItemMeta();
+        str1Meta.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 4800, 1), true);
+        str1.setItemMeta(str1Meta);
+        
+        ItemStack spe = new ItemStack(Material.POTION, 1, (short) 8226);
+        PotionMeta speMeta = (PotionMeta) spe.getItemMeta();
+        speMeta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 4800, 1), true);
+        spe.setItemMeta(speMeta);
+        
+        ItemStack spe1 = new ItemStack(Material.POTION, 1, (short) 8226);
+        PotionMeta spe1Meta = (PotionMeta) spe1.getItemMeta();
+        spe1Meta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 4800, 1), true);
+        spe1.setItemMeta(spe1Meta);
+        
+        if (e.getCurrentItem() == str && e.getCursor() == str) {
+        	
+        	e.setCancelled(true);
+        	
+        	e.setCurrentItem(str1);
+        	e.setCursor(new ItemStack(Material.AIR));
+        	
+        }
+        
+        if (e.getCurrentItem() == spe && e.getCursor() == spe) {
+        	
+        	e.setCancelled(true);
+        	
+        	e.setCurrentItem(spe1);
+        	e.setCursor(new ItemStack(Material.AIR));
+        	
+        }
+
+        if (e.getInventory().getName().equalsIgnoreCase(ChatColor.BLUE + "" + ChatColor.BOLD + "Redeem Your Kit")) {
+
+            e.setCancelled(true);
+
+            if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "Kit Starter")) {
+
+                if (starterTime.containsKey(p)) {
+
+                    p.closeInventory();
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "This kit is still on cooldown for " + ChatColor.UNDERLINE + starterTime.get(p) + ChatColor.GRAY + " hours.");
+                    return;
+
+                }
+
+                p.closeInventory();
+
+                p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You have redeemed your " + ChatColor.UNDERLINE + "Starter Kit" + ChatColor.GRAY + ".");
+
+                ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+                sword.addEnchantment(Enchantment.DAMAGE_ALL, 1);
+                ItemMeta swordMeta = sword.getItemMeta();
+                swordMeta.setDisplayName(ChatColor.GRAY + "[Starter] " + ChatColor.WHITE + "Sword");
+                sword.setItemMeta(swordMeta);
+
+                ItemStack helmet = new ItemStack(Material.IRON_HELMET, 1);
+                helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                ItemMeta helmetMeta = helmet.getItemMeta();
+                helmetMeta.setDisplayName(ChatColor.GRAY + "[Starter] " + ChatColor.WHITE + "Helmet");
+                helmet.setItemMeta(helmetMeta);
+
+                ItemStack chestplate = new ItemStack(Material.IRON_CHESTPLATE, 1);
+                chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                ItemMeta chestplateMeta = chestplate.getItemMeta();
+                chestplateMeta.setDisplayName(ChatColor.GRAY + "[Starter] " + ChatColor.WHITE + "Chestplate");
+                chestplate.setItemMeta(chestplateMeta);
+
+                ItemStack leggings = new ItemStack(Material.IRON_LEGGINGS, 1);
+                leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                ItemMeta leggingsMeta = leggings.getItemMeta();
+                leggingsMeta.setDisplayName(ChatColor.GRAY + "[Starter] " + ChatColor.WHITE + "Leggings");
+                leggings.setItemMeta(leggingsMeta);
+
+                ItemStack boots = new ItemStack(Material.IRON_BOOTS, 1);
+                boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                ItemMeta bootsMeta = boots.getItemMeta();
+                bootsMeta.setDisplayName(ChatColor.GRAY + "[Starter] " + ChatColor.WHITE + "Boots");
+                boots.setItemMeta(bootsMeta);
+
+                ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                pickaxe.addEnchantment(Enchantment.DIG_SPEED, 1);
+                ItemMeta pickaxeMeta = pickaxe.getItemMeta();
+                pickaxeMeta.setDisplayName(ChatColor.GRAY + "[Starter] " + ChatColor.WHITE + "Pickaxe");
+                pickaxe.setItemMeta(pickaxeMeta);
+
+                ItemStack bow = new ItemStack(Material.BOW, 1);
+                bow.addEnchantment(Enchantment.ARROW_DAMAGE, 1);
+                ItemMeta bowMeta = bow.getItemMeta();
+                bowMeta.setDisplayName(ChatColor.GRAY + "[Starter] " + ChatColor.WHITE + "Bow");
+                bow.setItemMeta(bowMeta);
+
+                ItemStack arrows = new ItemStack(Material.ARROW, 32);
+
+                ItemStack crapples = new ItemStack(Material.GOLDEN_APPLE, 4);
+
+                ItemStack tnt = new ItemStack(Material.TNT, 32);
+
+                ItemStack obby = new ItemStack(Material.OBSIDIAN, 32);
+
+                ItemStack stone = new ItemStack(Material.STONE, 64);
+
+                ItemStack diamonds = new ItemStack(Material.DIAMOND, 8);
+
+                ItemStack iron = new ItemStack(Material.IRON_INGOT, 12);
+                
+                ItemStack exp = new ItemStack(Material.EXP_BOTTLE, 16);
+                
+                p.getInventory().addItem(sword);
+                p.getInventory().addItem(helmet);
+                p.getInventory().addItem(chestplate);
+                p.getInventory().addItem(leggings);
+                p.getInventory().addItem(boots);
+                p.getInventory().addItem(pickaxe);
+                p.getInventory().addItem(bow);
+                p.getInventory().addItem(arrows);
+                p.getInventory().addItem(crapples);
+                p.getInventory().addItem(tnt);
+                p.getInventory().addItem(obby);
+                p.getInventory().addItem(stone);
+                p.getInventory().addItem(exp);
+                p.getInventory().addItem(diamonds);
+                p.getInventory().addItem(iron);
+                p.getInventory().addItem(str);
+                p.getInventory().addItem(spe);
+
+                starterTime.put(p, 24);
+                starterTask.put(p, new BukkitRunnable() {
+
+                    public void run() {
+
+                        starterTime.put(p, starterTime.get(p) - 1);
+
+                        if (starterTime.get(p) == 0) {
+
+                            starterTime.remove(p);
+                            starterTask.remove(p);
+
+                            cancel();
+
+                        }
+
+                    }
+
+                });
+
+                starterTask.get(p).runTaskTimer(this, 72000, 72000);
+
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Farmer")) {
+
+                if (perms.getInt("Kit." + p.getUniqueId().toString()) == 1) {
+
+                    if (farmerTime.containsKey(p)) {
+
+                        p.closeInventory();
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "This kit is still on cooldown for " + ChatColor.UNDERLINE + farmerTime.get(p) + ChatColor.GRAY + " hours.");
+                        return;
+
+                    }
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You have redeemed your " + ChatColor.UNDERLINE + "Farmer Kit" + ChatColor.GRAY + ".");
+
+                    ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    sword.addEnchantment(Enchantment.DAMAGE_ALL, 2);
+                    sword.addEnchantment(Enchantment.FIRE_ASPECT, 1);
+                    ItemMeta swordMeta = sword.getItemMeta();
+                    swordMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GREEN + "Farmer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Sword");
+                    sword.setItemMeta(swordMeta);
+
+                    ItemStack helmet = new ItemStack(Material.IRON_HELMET, 1);
+                    helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    helmet.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta helmetMeta = helmet.getItemMeta();
+                    helmetMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GREEN + "Farmer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Helmet");
+                    helmet.setItemMeta(helmetMeta);
+
+                    ItemStack chestplate = new ItemStack(Material.IRON_CHESTPLATE, 1);
+                    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    chestplate.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta chestplateMeta = chestplate.getItemMeta();
+                    chestplateMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GREEN + "Farmer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Chestplate");
+                    chestplate.setItemMeta(chestplateMeta);
+
+                    ItemStack leggings = new ItemStack(Material.IRON_LEGGINGS, 1);
+                    leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    leggings.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta leggingsMeta = leggings.getItemMeta();
+                    leggingsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GREEN + "Farmer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Leggings");
+                    leggings.setItemMeta(leggingsMeta);
+
+                    ItemStack boots = new ItemStack(Material.IRON_BOOTS, 1);
+                    boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    boots.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    bootsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GREEN + "Farmer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Boots");
+                    boots.setItemMeta(bootsMeta);
+
+                    ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                    pickaxe.addEnchantment(Enchantment.DIG_SPEED, 2);
+                    pickaxe.addEnchantment(Enchantment.SILK_TOUCH, 1);
+                    ItemMeta pickaxeMeta = pickaxe.getItemMeta();
+                    pickaxeMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GREEN + "Farmer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Pickaxe");
+                    pickaxe.setItemMeta(pickaxeMeta);
+
+                    ItemStack bow = new ItemStack(Material.BOW, 1);
+                    bow.addEnchantment(Enchantment.ARROW_DAMAGE, 3);
+                    ItemMeta bowMeta = bow.getItemMeta();
+                    bowMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GREEN + "Farmer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Bow");
+                    bow.setItemMeta(bowMeta);
+
+                    ItemStack crapples = new ItemStack(Material.GOLDEN_APPLE, 12);
+
+                    ItemStack arrows = new ItemStack(Material.ARROW, 64);
+
+                    ItemStack tnt = new ItemStack(Material.TNT, 64);
+
+                    ItemStack obby = new ItemStack(Material.OBSIDIAN, 64);
+
+                    ItemStack diamonds = new ItemStack(Material.DIAMOND, 16);
+
+                    ItemStack iron = new ItemStack(Material.IRON_INGOT, 32);
+                    
+                    ItemStack exp = new ItemStack(Material.EXP_BOTTLE, 32);
+
+                    p.getInventory().addItem(sword);
+                    p.getInventory().addItem(helmet);
+                    p.getInventory().addItem(chestplate);
+                    p.getInventory().addItem(leggings);
+                    p.getInventory().addItem(boots);
+                    p.getInventory().addItem(pickaxe);
+                    p.getInventory().addItem(bow);
+                    p.getInventory().addItem(crapples);
+                    p.getInventory().addItem(arrows);
+                    p.getInventory().addItem(tnt);
+                    p.getInventory().addItem(obby);
+                    p.getInventory().addItem(exp);
+                    p.getInventory().addItem(diamonds);
+                    p.getInventory().addItem(iron);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+
+                    farmerTime.put(p, 48);
+                    farmerTask.put(p, new BukkitRunnable() {
+
+                        public void run() {
+
+                            farmerTime.put(p, farmerTime.get(p) - 1);
+
+                            if (farmerTime.get(p) == 0) {
+
+                                farmerTime.remove(p);
+                                farmerTask.remove(p);
+
+                                cancel();
+
+                            }
+
+                        }
+
+                    });
+
+                    farmerTask.get(p).runTaskTimer(this, 72000, 72000);
+
+                } else {
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You do not have permissions for the " + ChatColor.UNDERLINE + "Farmer Kit" + ChatColor.GRAY + ".");
+
+                }
+
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "" + ChatColor.BOLD + "Kit Merchant")) {
+
+                if (perms.getInt("Kit." + p.getUniqueId().toString()) == 2) {
+
+                    if (merchantTime.containsKey(p)) {
+
+                        p.closeInventory();
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "This kit is still on cooldown for " + ChatColor.UNDERLINE + merchantTime.get(p) + ChatColor.GRAY + " hours.");
+                        return;
+
+                    }
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You have redeemed your " + ChatColor.UNDERLINE + "Merchant Kit" + ChatColor.GRAY + ".");
+
+                    ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    sword.addEnchantment(Enchantment.DAMAGE_ALL, 3);
+                    sword.addEnchantment(Enchantment.FIRE_ASPECT, 1);
+                    sword.addEnchantment(Enchantment.LOOT_BONUS_MOBS, 1);
+                    ItemMeta swordMeta = sword.getItemMeta();
+                    swordMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.YELLOW + "Merchant" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Sword");
+                    sword.setItemMeta(swordMeta);
+
+                    ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
+                    helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    helmet.addEnchantment(Enchantment.DURABILITY, 1);
+                    ItemMeta helmetMeta = helmet.getItemMeta();
+                    helmetMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.YELLOW + "Merchant" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Helmet");
+                    helmet.setItemMeta(helmetMeta);
+
+                    ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    chestplate.addEnchantment(Enchantment.DURABILITY, 1);
+                    ItemMeta chestplateMeta = chestplate.getItemMeta();
+                    chestplateMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.YELLOW + "Merchant" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Chestplate");
+                    chestplate.setItemMeta(chestplateMeta);
+
+                    ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
+                    leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    leggings.addEnchantment(Enchantment.DURABILITY, 1);
+                    ItemMeta leggingsMeta = leggings.getItemMeta();
+                    leggingsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.YELLOW + "Merchant" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Leggings");
+                    leggings.setItemMeta(leggingsMeta);
+
+                    ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS, 1);
+                    boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    boots.addEnchantment(Enchantment.DURABILITY, 1);
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    bootsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.YELLOW + "Merchant" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Boots");
+                    boots.setItemMeta(bootsMeta);
+
+                    ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                    pickaxe.addEnchantment(Enchantment.DIG_SPEED, 3);
+                    pickaxe.addEnchantment(Enchantment.SILK_TOUCH, 1);
+                    pickaxe.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta pickaxeMeta = pickaxe.getItemMeta();
+                    pickaxeMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.YELLOW + "Merchant" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Pickaxe");
+                    pickaxe.setItemMeta(pickaxeMeta);
+
+                    ItemStack bow = new ItemStack(Material.BOW, 1);
+                    bow.addEnchantment(Enchantment.ARROW_DAMAGE, 3);
+                    bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+                    bow.addEnchantment(Enchantment.ARROW_FIRE, 1);
+                    ItemMeta bowMeta = bow.getItemMeta();
+                    bowMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.YELLOW + "Merchant" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Bow");
+                    bow.setItemMeta(bowMeta);
+
+                    ItemStack crapples = new ItemStack(Material.GOLDEN_APPLE, 18);
+
+                    ItemStack arrows = new ItemStack(Material.ARROW, 64);
+
+                    ItemStack tnt = new ItemStack(Material.TNT, 64);
+
+                    ItemStack obby = new ItemStack(Material.OBSIDIAN, 64);
+
+                    ItemStack diamonds = new ItemStack(Material.DIAMOND, 32);
+
+                    ItemStack iron = new ItemStack(Material.IRON_INGOT, 48);
+                    
+                    ItemStack exp = new ItemStack(Material.EXP_BOTTLE, 48);
+
+                    p.getInventory().addItem(sword);
+                    p.getInventory().addItem(helmet);
+                    p.getInventory().addItem(chestplate);
+                    p.getInventory().addItem(leggings);
+                    p.getInventory().addItem(boots);
+                    p.getInventory().addItem(pickaxe);
+                    p.getInventory().addItem(bow);
+                    p.getInventory().addItem(crapples);
+                    p.getInventory().addItem(arrows);
+                    p.getInventory().addItem(tnt);
+                    p.getInventory().addItem(obby);
+                    p.getInventory().addItem(exp);
+                    p.getInventory().addItem(diamonds);
+                    p.getInventory().addItem(iron);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+
+                    merchantTime.put(p, 48);
+                    merchantTask.put(p, new BukkitRunnable() {
+
+                        public void run() {
+
+                            merchantTime.put(p, merchantTime.get(p) - 1);
+
+                            if (merchantTime.get(p) == 0) {
+
+                                merchantTime.remove(p);
+                                merchantTask.remove(p);
+
+                                cancel();
+
+                            }
+
+                        }
+
+                    });
+
+                    merchantTask.get(p).runTaskTimer(this, 72000, 72000);
+
+                } else {
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You do not have permissions for the " + ChatColor.UNDERLINE + "Merchant Kit" + ChatColor.GRAY + ".");
+
+                }
+
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "" + ChatColor.BOLD + "Kit Industrialist")) {
+
+                if (perms.getInt("Kit." + p.getUniqueId().toString()) == 3) {
+
+                    if (industrialistTime.containsKey(p)) {
+
+                        p.closeInventory();
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "This kit is still on cooldown for " + ChatColor.UNDERLINE + industrialistTime.get(p) + ChatColor.GRAY + " hours.");
+                        return;
+
+                    }
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You have redeemed your " + ChatColor.UNDERLINE + "Industrialist Kit" + ChatColor.GRAY + ".");
+
+                    ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    sword.addEnchantment(Enchantment.DAMAGE_ALL, 4);
+                    sword.addEnchantment(Enchantment.FIRE_ASPECT, 2);
+                    sword.addEnchantment(Enchantment.LOOT_BONUS_MOBS, 2);
+                    ItemMeta swordMeta = sword.getItemMeta();
+                    swordMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GOLD + "Industrialist" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Sword");
+                    sword.setItemMeta(swordMeta);
+
+                    ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
+                    helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    helmet.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta helmetMeta = helmet.getItemMeta();
+                    helmetMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GOLD + "Industrialist" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Helmet");
+                    helmet.setItemMeta(helmetMeta);
+
+                    ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    chestplate.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta chestplateMeta = chestplate.getItemMeta();
+                    chestplateMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GOLD + "Industrialist" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Chestplate");
+                    chestplate.setItemMeta(chestplateMeta);
+
+                    ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
+                    leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    leggings.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta leggingsMeta = leggings.getItemMeta();
+                    leggingsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GOLD + "Industrialist" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Leggings");
+                    leggings.setItemMeta(leggingsMeta);
+
+                    ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS, 1);
+                    boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    boots.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    bootsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GOLD + "Industrialist" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Boots");
+                    boots.setItemMeta(bootsMeta);
+
+                    ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                    pickaxe.addEnchantment(Enchantment.DIG_SPEED, 4);
+                    pickaxe.addEnchantment(Enchantment.SILK_TOUCH, 1);
+                    pickaxe.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta pickaxeMeta = pickaxe.getItemMeta();
+                    pickaxeMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GOLD + "Industrialist" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Pickaxe");
+                    pickaxe.setItemMeta(pickaxeMeta);
+
+                    ItemStack pickaxe1 = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                    pickaxe1.addEnchantment(Enchantment.DIG_SPEED, 3);
+                    pickaxe1.addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 2);
+                    pickaxe1.addEnchantment(Enchantment.DURABILITY, 1);
+                    ItemMeta pickaxe1Meta = pickaxe1.getItemMeta();
+                    pickaxe1Meta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GOLD + "Industrialist" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Pickaxe");
+                    pickaxe1.setItemMeta(pickaxe1Meta);
+
+                    ItemStack bow = new ItemStack(Material.BOW, 1);
+                    bow.addEnchantment(Enchantment.ARROW_DAMAGE, 4);
+                    bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+                    bow.addEnchantment(Enchantment.ARROW_FIRE, 1);
+                    bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
+                    ItemMeta bowMeta = bow.getItemMeta();
+                    bowMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.GOLD + "Industrialist" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Bow");
+                    bow.setItemMeta(bowMeta);
+
+                    ItemStack crapples = new ItemStack(Material.GOLDEN_APPLE, 24);
+
+                    ItemStack arrows = new ItemStack(Material.ARROW, 64);
+
+                    ItemStack tnt = new ItemStack(Material.TNT, 64);
+
+                    ItemStack obby = new ItemStack(Material.OBSIDIAN, 64);
+
+                    ItemStack diamonds = new ItemStack(Material.DIAMOND, 48);
+
+                    ItemStack iron = new ItemStack(Material.IRON_INGOT, 56);
+                    
+                    ItemStack exp = new ItemStack(Material.EXP_BOTTLE, 64);
+
+                    p.getInventory().addItem(sword);
+                    p.getInventory().addItem(helmet);
+                    p.getInventory().addItem(chestplate);
+                    p.getInventory().addItem(leggings);
+                    p.getInventory().addItem(boots);
+                    p.getInventory().addItem(pickaxe);
+                    p.getInventory().addItem(pickaxe1);
+                    p.getInventory().addItem(bow);
+                    p.getInventory().addItem(crapples);
+                    p.getInventory().addItem(arrows);
+                    p.getInventory().addItem(tnt);
+                    p.getInventory().addItem(obby);
+                    p.getInventory().addItem(exp);
+                    p.getInventory().addItem(diamonds);
+                    p.getInventory().addItem(iron);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+
+                    industrialistTime.put(p, 48);
+                    industrialistTask.put(p, new BukkitRunnable() {
+
+                        public void run() {
+
+                            industrialistTime.put(p, industrialistTime.get(p) - 1);
+
+                            if (industrialistTime.get(p) == 0) {
+
+                                industrialistTime.remove(p);
+                                industrialistTask.remove(p);
+
+                                cancel();
+
+                            }
+
+                        }
+
+                    });
+
+                    industrialistTask.get(p).runTaskTimer(this, 72000, 72000);
+
+                } else {
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You do not have permissions for the " + ChatColor.UNDERLINE + "Industrialist Kit" + ChatColor.GRAY + ".");
+
+                }
+
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.RED + "" + ChatColor.BOLD + "Kit Engineer")) {
+
+                if (perms.getInt("Rank." + p.getUniqueId().toString()) == 4) {
+
+                    if (engineerTime.containsKey(p)) {
+
+                        p.closeInventory();
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "This kit is still on cooldown for " + ChatColor.UNDERLINE + engineerTime.get(p) + ChatColor.GRAY + " hours.");
+                        return;
+
+                    }
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You have redeemed your " + ChatColor.UNDERLINE + "Engineer Kit" + ChatColor.GRAY + ".");
+
+                    ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    sword.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+                    sword.addEnchantment(Enchantment.FIRE_ASPECT, 2);
+                    sword.addEnchantment(Enchantment.LOOT_BONUS_MOBS, 3);
+                    ItemMeta swordMeta = sword.getItemMeta();
+                    swordMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.RED + "Engineer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Sword");
+                    sword.setItemMeta(swordMeta);
+                    
+                    ItemStack axe = new ItemStack(Material.DIAMOND_AXE, 1);
+                    axe.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+                    axe.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
+                    axe.addEnchantment(Enchantment.DURABILITY, 1);
+                    ItemMeta axeMeta = axe.getItemMeta();
+                    axeMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.RED + "Engineer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Axe");
+                    axe.setItemMeta(axeMeta);
+
+                    ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
+                    helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    helmet.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                    ItemMeta helmetMeta = helmet.getItemMeta();
+                    helmetMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.RED + "Engineer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Helmet");
+                    helmet.setItemMeta(helmetMeta);
+
+                    ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    chestplate.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                    ItemMeta chestplateMeta = chestplate.getItemMeta();
+                    chestplateMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.RED + "Engineer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Chestplate");
+                    chestplate.setItemMeta(chestplateMeta);
+
+                    ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
+                    leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    leggings.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                    ItemMeta leggingsMeta = leggings.getItemMeta();
+                    leggingsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.RED + "Engineer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Leggings");
+                    leggings.setItemMeta(leggingsMeta);
+
+                    ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS, 1);
+                    boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    boots.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    bootsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.RED + "Engineer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Boots");
+                    boots.setItemMeta(bootsMeta);
+
+                    ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                    pickaxe.addEnchantment(Enchantment.DIG_SPEED, 5);
+                    pickaxe.addEnchantment(Enchantment.SILK_TOUCH, 1);
+                    pickaxe.addEnchantment(Enchantment.DURABILITY, 3);
+                    ItemMeta pickaxeMeta = pickaxe.getItemMeta();
+                    pickaxeMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.RED + "Engineer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Pickaxe");
+                    pickaxe.setItemMeta(pickaxeMeta);
+
+                    ItemStack pickaxe1 = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                    pickaxe1.addEnchantment(Enchantment.DIG_SPEED, 5);
+                    pickaxe1.addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 3);
+                    pickaxe1.addEnchantment(Enchantment.DURABILITY, 2);
+                    ItemMeta pickaxe1Meta = pickaxe1.getItemMeta();
+                    pickaxe1Meta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.RED + "Engineer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Pickaxe");
+                    pickaxe1.setItemMeta(pickaxe1Meta);
+
+                    ItemStack bow = new ItemStack(Material.BOW, 1);
+                    bow.addEnchantment(Enchantment.ARROW_DAMAGE, 5);
+                    bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+                    bow.addEnchantment(Enchantment.ARROW_FIRE, 1);
+                    bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
+                    ItemMeta bowMeta = bow.getItemMeta();
+                    bowMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.RED + "Engineer" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Bow");
+                    bow.setItemMeta(bowMeta);
+
+					ItemStack gapples = new ItemStack(Material.GOLDEN_APPLE, 1, (short) 1);
+
+                    ItemStack crapples = new ItemStack(Material.GOLDEN_APPLE, 30);
+
+                    ItemStack arrows = new ItemStack(Material.ARROW, 64);
+
+                    ItemStack tnt = new ItemStack(Material.TNT, 64);
+
+                    ItemStack obby = new ItemStack(Material.OBSIDIAN, 64);
+
+                    ItemStack diamonds = new ItemStack(Material.DIAMOND, 64);
+
+                    ItemStack iron = new ItemStack(Material.IRON_INGOT, 64);
+                    
+                    ItemStack exp = new ItemStack(Material.EXP_BOTTLE, 64);
+
+                    p.getInventory().addItem(sword);
+                    p.getInventory().addItem(helmet);
+                    p.getInventory().addItem(chestplate);
+                    p.getInventory().addItem(leggings);
+                    p.getInventory().addItem(boots);
+                    p.getInventory().addItem(pickaxe);
+                    p.getInventory().addItem(pickaxe1);
+                    p.getInventory().addItem(bow);
+                    p.getInventory().addItem(gapples);
+                    p.getInventory().addItem(crapples);
+                    p.getInventory().addItem(arrows);
+                    p.getInventory().addItem(tnt);
+                    p.getInventory().addItem(obby);
+                    p.getInventory().addItem(exp);
+                    p.getInventory().addItem(exp);
+                    p.getInventory().addItem(diamonds);
+                    p.getInventory().addItem(iron);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+
+                    engineerTime.put(p, 48);
+                    engineerTask.put(p, new BukkitRunnable() {
+
+                        public void run() {
+
+                            engineerTime.put(p, engineerTime.get(p) - 1);
+
+                            if (engineerTime.get(p) == 0) {
+
+                                engineerTime.remove(p);
+                                engineerTask.remove(p);
+
+                                cancel();
+
+                            }
+
+                        }
+
+                    });
+
+                    engineerTask.get(p).runTaskTimer(this, 72000, 72000);
+
+                } else {
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You do not have permissions for the " + ChatColor.UNDERLINE + "Engineer Kit" + ChatColor.GRAY + ".");
+
+                }
+
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "" + ChatColor.BOLD + "Kit Dragon")) {
+
+                if (perms.getInt("DragonKit." + p.getUniqueId().toString()) == 1) {
+
+                    if (dragonTime.containsKey(p)) {
+
+                        p.closeInventory();
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "This kit is still on cooldown for " + ChatColor.UNDERLINE + dragonTime.get(p) + ChatColor.GRAY + " hours.");
+                        return;
+
+                    }
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You have redeemed your " + ChatColor.UNDERLINE + "Dragon Kit" + ChatColor.GRAY + ".");
+
+                    ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    sword.addEnchantment(Enchantment.FIRE_ASPECT, 1);
+                    sword.addEnchantment(Enchantment.DAMAGE_ALL, 4);
+                    ItemMeta swordMeta = sword.getItemMeta();
+                    swordMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Sword");
+                    sword.setItemMeta(swordMeta);
+
+                    ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
+                    helmet.addEnchantment(Enchantment.DURABILITY, 3);
+                    helmet.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                    ItemMeta helmetMeta = helmet.getItemMeta();
+                    helmetMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Helmet");
+                    helmet.setItemMeta(helmetMeta);
+
+                    ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    chestplate.addEnchantment(Enchantment.DURABILITY, 3);
+                    chestplate.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                    ItemMeta chestplateMeta = chestplate.getItemMeta();
+                    chestplateMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Chestplate");
+                    chestplate.setItemMeta(chestplateMeta);
+
+                    ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
+                    leggings.addEnchantment(Enchantment.DURABILITY, 3);
+                    leggings.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                    ItemMeta leggingsMeta = leggings.getItemMeta();
+                    leggingsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Leggings");
+                    leggings.setItemMeta(leggingsMeta);
+
+                    ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS, 1);
+                    boots.addEnchantment(Enchantment.DURABILITY, 3);
+                    boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    bootsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Boots");
+                    boots.setItemMeta(bootsMeta);
+
+                    ItemStack helmet1 = new ItemStack(Material.DIAMOND_HELMET, 1);
+                    helmet1.addEnchantment(Enchantment.DURABILITY, 3);
+                    helmet1.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    ItemMeta helmet1Meta = helmet1.getItemMeta();
+                    helmet1Meta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Helmet");
+                    helmet1.setItemMeta(helmet1Meta);
+
+                    ItemStack chestplate1 = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    chestplate1.addEnchantment(Enchantment.DURABILITY, 3);
+                    chestplate1.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    ItemMeta chestplate1Meta = chestplate1.getItemMeta();
+                    chestplate1Meta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Chesplate");
+                    chestplate1.setItemMeta(chestplate1Meta);
+
+                    ItemStack leggings1 = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
+                    leggings1.addEnchantment(Enchantment.DURABILITY, 3);
+                    leggings1.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    ItemMeta leggings1Meta = leggings1.getItemMeta();
+                    leggings1Meta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Leggings");
+                    leggings1.setItemMeta(leggings1Meta);
+
+                    ItemStack boots1 = new ItemStack(Material.DIAMOND_BOOTS, 1);
+                    boots1.addEnchantment(Enchantment.DURABILITY, 3);
+                    boots1.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    boots1.addEnchantment(Enchantment.PROTECTION_FALL, 4);
+                    ItemMeta boots1Meta = boots1.getItemMeta();
+                    boots1Meta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Boots");
+                    boots1.setItemMeta(boots1Meta);
+
+                    ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                    pickaxe.addEnchantment(Enchantment.DIG_SPEED, 5);
+                    pickaxe.addEnchantment(Enchantment.SILK_TOUCH, 1);
+                    pickaxe.addEnchantment(Enchantment.DURABILITY, 3);
+                    ItemMeta pickaxeMeta = pickaxe.getItemMeta();
+                    pickaxeMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "Dragon" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Pickaxe");
+                    pickaxe.setItemMeta(pickaxeMeta);
+
+                    ItemStack gapples = new ItemStack(Material.GOLDEN_APPLE, 1, (short) 1);
+
+                    ItemStack crapples = new ItemStack(Material.GOLDEN_APPLE, 24);
+
+                    ItemStack arrows = new ItemStack(Material.ARROW, 64);
+
+                    ItemStack tnt = new ItemStack(Material.TNT, 64);
+
+                    ItemStack obby = new ItemStack(Material.OBSIDIAN, 64);
+
+                    ItemStack diamonds = new ItemStack(Material.DIAMOND, 32);
+
+                    ItemStack iron = new ItemStack(Material.IRON_INGOT, 64);
+                    
+                    ItemStack exp = new ItemStack(Material.EXP_BOTTLE, 64);
+
+                    p.getInventory().addItem(sword);
+                    p.getInventory().addItem(helmet);
+                    p.getInventory().addItem(chestplate);
+                    p.getInventory().addItem(leggings);
+                    p.getInventory().addItem(boots);
+                    p.getInventory().addItem(helmet1);
+                    p.getInventory().addItem(chestplate1);
+                    p.getInventory().addItem(leggings1);
+                    p.getInventory().addItem(boots1);
+                    p.getInventory().addItem(pickaxe);
+                    p.getInventory().addItem(gapples);
+                    p.getInventory().addItem(crapples);
+                    p.getInventory().addItem(arrows);
+                    p.getInventory().addItem(tnt);
+                    p.getInventory().addItem(obby);
+                    p.getInventory().addItem(exp);
+                    p.getInventory().addItem(diamonds);
+                    p.getInventory().addItem(iron);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+
+                    dragonTime.put(p, 48);
+                    dragonTask.put(p, new BukkitRunnable() {
+
+                        public void run() {
+
+                            dragonTime.put(p, dragonTime.get(p) - 1);
+
+                            if (dragonTime.get(p) == 0) {
+
+                                dragonTime.remove(p);
+                                dragonTask.remove(p);
+
+                                cancel();
+
+                            }
+
+                        }
+
+                    });
+
+                    dragonTask.get(p).runTaskTimer(this, 72000, 72000);
+
+                } else {
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You do not have permissions for the " + ChatColor.UNDERLINE + "Dragon Kit" + ChatColor.GRAY + ".");
+
+                }
+
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Leprechaun")) {
+
+                if (perms.getInt("LeprechaunKit." + p.getUniqueId().toString()) == 1) {
+
+                    if (leprechaunTime.containsKey(p)) {
+
+                        p.closeInventory();
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "This kit is still on cooldown for " + ChatColor.UNDERLINE + leprechaunTime.get(p) + ChatColor.GRAY + " hours.");
+                        return;
+
+                    }
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You have redeemed your " + ChatColor.UNDERLINE + "Leprechaun Kit" + ChatColor.GRAY + ".");
+
+                    ItemStack axe = new ItemStack(Material.DIAMOND_AXE, 1);
+                    axe.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 6);
+                    axe.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
+                    ItemMeta axeMeta = axe.getItemMeta();
+                    axeMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + "Leprechaun" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Axe");
+                    axe.setItemMeta(axeMeta);
+
+                    ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
+                    helmet.addEnchantment(Enchantment.DURABILITY, 1);
+                    helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    ItemMeta helmetMeta = helmet.getItemMeta();
+                    helmetMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + "Leprechaun" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Helmet");
+                    helmet.setItemMeta(helmetMeta);
+
+                    ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    chestplate.addEnchantment(Enchantment.DURABILITY, 1);
+                    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    ItemMeta chestplateMeta = chestplate.getItemMeta();
+                    chestplateMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + "Leprechaun" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Chestplate");
+                    chestplate.setItemMeta(chestplateMeta);
+
+                    ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
+                    leggings.addEnchantment(Enchantment.DURABILITY, 1);
+                    leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    ItemMeta leggingsMeta = leggings.getItemMeta();
+                    leggingsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + "Leprechaun" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Leggings");
+                    leggings.setItemMeta(leggingsMeta);
+
+                    ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS, 1);
+                    boots.addEnchantment(Enchantment.DURABILITY, 1);
+                    boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    bootsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + "Leprechaun" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Boots");
+                    boots.setItemMeta(bootsMeta);
+
+                    ItemStack gapples = new ItemStack(Material.GOLDEN_APPLE, 1, (short) 1);
+
+                    ItemStack crapples = new ItemStack(Material.GOLDEN_APPLE, 24);
+
+                    ItemStack tnt = new ItemStack(Material.TNT, 64);
+
+                    ItemStack obby = new ItemStack(Material.OBSIDIAN, 64);
+
+                    ItemStack diamonds = new ItemStack(Material.DIAMOND, 32);
+
+                    ItemStack iron = new ItemStack(Material.IRON_INGOT, 64);
+                    
+                    ItemStack exp = new ItemStack(Material.EXP_BOTTLE, 64);
+
+                    p.getInventory().addItem(axe);
+                    p.getInventory().addItem(helmet);
+                    p.getInventory().addItem(chestplate);
+                    p.getInventory().addItem(leggings);
+                    p.getInventory().addItem(boots);
+                    p.getInventory().addItem(tnt);
+                    p.getInventory().addItem(obby);
+                    p.getInventory().addItem(exp);
+                    p.getInventory().addItem(diamonds);
+                    p.getInventory().addItem(iron);
+                    p.getInventory().addItem(gapples);
+                    p.getInventory().addItem(crapples);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+
+                    leprechaunTime.put(p, 48);
+                    leprechaunTask.put(p, new BukkitRunnable() {
+
+                        public void run() {
+
+                            leprechaunTime.put(p, leprechaunTime.get(p) - 1);
+
+                            if (leprechaunTime.get(p) == 0) {
+
+                                leprechaunTime.remove(p);
+                                leprechaunTask.remove(p);
+
+                                cancel();
+
+                            }
+
+                        }
+
+                    });
+
+                    leprechaunTask.get(p).runTaskTimer(this, 72000, 72000);
+
+                } else {
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You do not have permissions for the " + ChatColor.UNDERLINE + "Leprechaun Kit" + ChatColor.GRAY + ".");
+
+                }
+
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Kit Ghoul")) {
+
+                if (perms.getInt("GhoulKit." + p.getUniqueId().toString()) == 1) {
+
+                    if (ghoulTime.containsKey(p)) {
+
+                        p.closeInventory();
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "This kit is still on cooldown for " + ChatColor.UNDERLINE + ghoulTime.get(p) + ChatColor.GRAY + " hours.");
+                        return;
+
+                    }
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You have redeemed your " + ChatColor.UNDERLINE + "Ghoul Kit" + ChatColor.GRAY + ".");
+
+                    ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    sword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 6);
+                    sword.addEnchantment(Enchantment.FIRE_ASPECT, 2);
+                    sword.addEnchantment(Enchantment.KNOCKBACK, 1);
+                    ItemMeta swordMeta = sword.getItemMeta();
+                    swordMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Ghoul" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Sword");
+                    sword.setItemMeta(swordMeta);
+
+                    ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
+                    helmet.addEnchantment(Enchantment.DURABILITY, 2);
+                    helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                    ItemMeta helmetMeta = helmet.getItemMeta();
+                    helmetMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Ghoul" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Helmet");
+                    helmet.setItemMeta(helmetMeta);
+
+                    ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    chestplate.addEnchantment(Enchantment.DURABILITY, 2);
+                    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                    ItemMeta chestplateMeta = chestplate.getItemMeta();
+                    chestplateMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Ghoul" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Chestplate");
+                    chestplate.setItemMeta(chestplateMeta);
+                    
+                    ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
+                    leggings.addEnchantment(Enchantment.DURABILITY, 2);
+                    leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                    ItemMeta leggingsMeta = leggings.getItemMeta();
+                    leggingsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Ghoul" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Leggings");
+                    leggings.setItemMeta(leggingsMeta);
+
+                    ItemStack boots = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    boots.addEnchantment(Enchantment.DURABILITY, 2);
+                    boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    bootsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Ghoul" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Boots");
+                    boots.setItemMeta(bootsMeta);
+
+                    ItemStack gapples = new ItemStack(Material.GOLDEN_APPLE, 1, (short) 1);
+
+                    ItemStack crapples = new ItemStack(Material.GOLDEN_APPLE, 24);
+
+                    ItemStack tnt = new ItemStack(Material.TNT, 64);
+
+                    ItemStack obby = new ItemStack(Material.OBSIDIAN, 64);
+
+                    ItemStack diamonds = new ItemStack(Material.DIAMOND, 32);
+
+                    ItemStack iron = new ItemStack(Material.IRON_INGOT, 64);
+                    
+                    ItemStack exp = new ItemStack(Material.EXP_BOTTLE, 64);
+
+                    p.getInventory().addItem(sword);
+                    p.getInventory().addItem(helmet);
+                    p.getInventory().addItem(chestplate);
+                    p.getInventory().addItem(leggings);
+                    p.getInventory().addItem(boots);
+                    p.getInventory().addItem(tnt);
+                    p.getInventory().addItem(obby);
+                    p.getInventory().addItem(exp);
+                    p.getInventory().addItem(diamonds);
+                    p.getInventory().addItem(iron);
+                    p.getInventory().addItem(gapples);
+                    p.getInventory().addItem(crapples);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+
+                    ghoulTime.put(p, 48);
+                    ghoulTask.put(p, new BukkitRunnable() {
+
+                        public void run() {
+
+                            ghoulTime.put(p, ghoulTime.get(p) - 1);
+
+                            if (ghoulTime.get(p) == 0) {
+
+                                ghoulTime.remove(p);
+                                ghoulTask.remove(p);
+
+                                cancel();
+
+                            }
+
+                        }
+
+                    });
+
+                    ghoulTask.get(p).runTaskTimer(this, 72000, 72000);
+
+                } else {
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You do not have permissions for the " + ChatColor.UNDERLINE + "Ghoul Kit" + ChatColor.GRAY + ".");
+
+                }
+
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.WHITE + "" + ChatColor.BOLD + "Kit Snowflake")) {
+
+                if (perms.getInt("SnowflakeKit." + p.getUniqueId().toString()) == 1) {
+
+                    if (snowflakeTime.containsKey(p)) {
+
+                        p.closeInventory();
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "This kit is still on cooldown for " + ChatColor.UNDERLINE + snowflakeTime.get(p) + ChatColor.GRAY + " hours.");
+                        return;
+
+                    }
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You have redeemed your " + ChatColor.UNDERLINE + "Snowflake Kit" + ChatColor.GRAY + ".");
+
+                    ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    sword.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+                    ItemMeta swordMeta = sword.getItemMeta();
+                    swordMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.AQUA + "Snowman" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Sword");
+                    sword.setItemMeta(swordMeta);
+
+                    ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
+                    helmet.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                    helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    ItemMeta helmetMeta = helmet.getItemMeta();
+                    helmetMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.AQUA + "Snowman" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Helmet");
+                    helmet.setItemMeta(helmetMeta);
+
+                    ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    chestplate.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    ItemMeta chestplateMeta = chestplate.getItemMeta();
+                    chestplateMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.AQUA + "Snowman" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Chestplate");
+                    chestplate.setItemMeta(chestplateMeta);
+                    
+                    ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
+                    leggings.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                    leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    ItemMeta leggingsMeta = leggings.getItemMeta();
+                    leggingsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.AQUA + "Snowman" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Leggings");
+                    leggings.setItemMeta(leggingsMeta);
+
+                    ItemStack boots = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                    boots.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                    boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    bootsMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.AQUA + "Snowman" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Boots");
+                    boots.setItemMeta(bootsMeta);
+                    
+                    ItemStack bow = new ItemStack(Material.BOW, 1);
+                    bow.addEnchantment(Enchantment.ARROW_DAMAGE, 5);
+                    bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+                    bow.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 3);
+                    ItemMeta bowMeta = bow.getItemMeta();
+                    bowMeta.setDisplayName(ChatColor.GRAY + "[" + ChatColor.AQUA + "Snowman" + ChatColor.GRAY + "] " + ChatColor.WHITE + "Bow");
+                    bow.setItemMeta(bowMeta);
+
+
+                    ItemStack gapples = new ItemStack(Material.GOLDEN_APPLE, 1, (short) 1);
+
+                    ItemStack crapples = new ItemStack(Material.GOLDEN_APPLE, 24);
+
+                    ItemStack tnt = new ItemStack(Material.TNT, 64);
+
+                    ItemStack obby = new ItemStack(Material.OBSIDIAN, 64);
+
+                    ItemStack diamonds = new ItemStack(Material.DIAMOND, 32);
+
+                    ItemStack iron = new ItemStack(Material.IRON_INGOT, 64);
+                    
+                    ItemStack exp = new ItemStack(Material.EXP_BOTTLE, 64);
+
+                    p.getInventory().addItem(sword);
+                    p.getInventory().addItem(helmet);
+                    p.getInventory().addItem(chestplate);
+                    p.getInventory().addItem(leggings);
+                    p.getInventory().addItem(boots);
+                    p.getInventory().addItem(bow);
+                    p.getInventory().addItem(tnt);
+                    p.getInventory().addItem(obby);
+                    p.getInventory().addItem(exp);
+                    p.getInventory().addItem(diamonds);
+                    p.getInventory().addItem(iron);
+                    p.getInventory().addItem(gapples);
+                    p.getInventory().addItem(crapples);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+                    p.getInventory().addItem(str);
+                    p.getInventory().addItem(spe);
+
+                    snowflakeTime.put(p, 48);
+                    snowflakeTask.put(p, new BukkitRunnable() {
+
+                        public void run() {
+
+                            snowflakeTime.put(p, snowflakeTime.get(p) - 1);
+
+                            if (snowflakeTime.get(p) == 0) {
+
+                                snowflakeTime.remove(p);
+                                snowflakeTask.remove(p);
+
+                                cancel();
+
+                            }
+
+                        }
+
+                    });
+
+                    snowflakeTask.get(p).runTaskTimer(this, 72000, 72000);
+
+                } else {
+
+                    p.closeInventory();
+
+                    p.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "KITS " + ChatColor.GRAY + "You do not have permissions for the " + ChatColor.UNDERLINE + "Snowflake Kit" + ChatColor.GRAY + ".");
+
+                }
+
+            }
+
+        }
+
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+
+        Player p = (Player) sender;
+
+        if (cmd.getName().equalsIgnoreCase("kit")) {
+
+            kitMenu(p);
+
+        } else if (cmd.getName().equalsIgnoreCase("feed")) {
+        
+        	if (inffood.get(p) == 0) {
+        	
+        		inffood.put(p, 1);
+        		p.sendMessage(ChatColor.WHITE + "Infinite Food perk has been " + ChatColor.DARK_PURPLE + "activated" + ChatColor.WHITE + ".");
+        	
+        	} else if (inffood.get(p) == 1) {
+        	
+        		inffood.put(p, 0);
+        		p.sendMessage(ChatColor.WHITE + "Infinite Food perk has been " + ChatColor.DARK_PURPLE + "de-activated" + ChatColor.WHITE + ".");
+        	
+        	}
+        
+        }
+
+        return true;
+
+    }
+
+    public void kitMenu(Player p) {
+
+        Inventory kit = Bukkit.createInventory(null, 27, ChatColor.BLUE + "" + ChatColor.BOLD + "Redeem Your Kit");
+
+        ItemStack starter = new ItemStack(Material.INK_SACK, 1, (short) 7);
+        ItemMeta starterMeta = starter.getItemMeta();
+        starterMeta.setDisplayName(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "Kit Starter");
+        ArrayList<String> starterLore = new ArrayList<String>();
+        starterLore.add(ChatColor.GRAY + "This kit is automatically unlocked.");
+        starterLore.add(" ");
+        starterLore.add(ChatColor.GRAY + "Click to redeem this kit.");
+        starterLore.add(" ");
+        starterLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "Unlocked");
+        starterMeta.setLore(starterLore);
+        starter.setItemMeta(starterMeta);
+
+        kit.setItem(0, starter);
+
+        if (perms.getInt("Rank." + p.getUniqueId().toString()) == 0) {
+
+            ItemStack farmer = new ItemStack(Material.INK_SACK, 1, (short) 2);
+            ItemMeta farmerMeta = farmer.getItemMeta();
+            farmerMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Farmer");
+            ArrayList<String> farmerLore = new ArrayList<String>();
+            farmerLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/15" + ChatColor.GRAY + " and complete ");
+            farmerLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            farmerMeta.setLore(farmerLore);
+            farmer.setItemMeta(farmerMeta);
+
+            ItemStack merchant = new ItemStack(Material.INK_SACK, 1, (short) 11);
+            ItemMeta merchantMeta = merchant.getItemMeta();
+            merchantMeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Kit Merchant");
+            ArrayList<String> merchantLore = new ArrayList<String>();
+            merchantLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            merchantLore.add(" ");
+            merchantLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/25" + ChatColor.GRAY + " and complete ");
+            merchantLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            merchantLore.add(" ");
+            merchantLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            merchantMeta.setLore(merchantLore);
+            merchant.setItemMeta(merchantMeta);
+
+            ItemStack industrialist = new ItemStack(Material.INK_SACK, 1, (short) 14);
+            ItemMeta industrialistMeta = industrialist.getItemMeta();
+            industrialistMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Kit Industrialist");
+            ArrayList<String> industrialistLore = new ArrayList<String>();
+            industrialistLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/40" + ChatColor.GRAY + " and complete ");
+            industrialistLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            industrialistMeta.setLore(industrialistLore);
+            industrialist.setItemMeta(industrialistMeta);
+
+            ItemStack engineer = new ItemStack(Material.INK_SACK, 1, (short) 1);
+            ItemMeta engineerMeta = engineer.getItemMeta();
+            engineerMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Kit Engineer");
+            ArrayList<String> engineerLore = new ArrayList<String>();
+            engineerLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/65" + ChatColor.GRAY + " and complete ");
+            engineerLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            engineerMeta.setLore(engineerLore);
+            engineer.setItemMeta(engineerMeta);
+
+            kit.setItem(1, farmer);
+            kit.setItem(2, merchant);
+            kit.setItem(3, industrialist);
+            kit.setItem(4, engineer);
+
+        } else if (perms.getInt("Rank." + p.getUniqueId().toString()) == 1) {
+
+            ItemStack farmer = new ItemStack(Material.INK_SACK, 1, (short) 2);
+            ItemMeta farmerMeta = farmer.getItemMeta();
+            farmerMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Farmer");
+            ArrayList<String> farmerLore = new ArrayList<String>();
+            farmerLore.add(ChatColor.GRAY + "You already have access to this kit.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.GRAY + "Click to redeem this kit.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "Unlocked");
+            farmerMeta.setLore(farmerLore);
+            farmer.setItemMeta(farmerMeta);
+
+            ItemStack merchant = new ItemStack(Material.INK_SACK, 1, (short) 11);
+            ItemMeta merchantMeta = merchant.getItemMeta();
+            merchantMeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Kit Merchant");
+            ArrayList<String> merchantLore = new ArrayList<String>();
+            merchantLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            merchantLore.add(" ");
+            merchantLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/25" + ChatColor.GRAY + " and complete ");
+            merchantLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            merchantLore.add(" ");
+            merchantLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            merchantMeta.setLore(merchantLore);
+            merchant.setItemMeta(merchantMeta);
+
+            ItemStack industrialist = new ItemStack(Material.INK_SACK, 1, (short) 14);
+            ItemMeta industrialistMeta = industrialist.getItemMeta();
+            industrialistMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Kit Industrialist");
+            ArrayList<String> industrialistLore = new ArrayList<String>();
+            industrialistLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/40" + ChatColor.GRAY + " and complete ");
+            industrialistLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            industrialistMeta.setLore(industrialistLore);
+            industrialist.setItemMeta(industrialistMeta);
+
+            ItemStack engineer = new ItemStack(Material.INK_SACK, 1, (short) 1);
+            ItemMeta engineerMeta = engineer.getItemMeta();
+            engineerMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Kit Engineer");
+            ArrayList<String> engineerLore = new ArrayList<String>();
+            engineerLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/65" + ChatColor.GRAY + " and complete ");
+            engineerLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            engineerMeta.setLore(engineerLore);
+            engineer.setItemMeta(engineerMeta);
+
+            kit.setItem(1, farmer);
+            kit.setItem(2, merchant);
+            kit.setItem(3, industrialist);
+            kit.setItem(4, engineer);
+
+        } else if (perms.getInt("Rank." + p.getUniqueId().toString()) == 2) {
+
+            ItemStack farmer = new ItemStack(Material.INK_SACK, 1, (short) 2);
+            ItemMeta farmerMeta = farmer.getItemMeta();
+            farmerMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Farmer");
+            ArrayList<String> farmerLore = new ArrayList<String>();
+            farmerLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/15" + ChatColor.GRAY + " and complete ");
+            farmerLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            farmerMeta.setLore(farmerLore);
+            farmer.setItemMeta(farmerMeta);
+
+            ItemStack merchant = new ItemStack(Material.INK_SACK, 1, (short) 11);
+            ItemMeta merchantMeta = merchant.getItemMeta();
+            merchantMeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Kit Merchant");
+            ArrayList<String> merchantLore = new ArrayList<String>();
+            merchantLore.add(ChatColor.GRAY + "You already have access to this kit.");
+            merchantLore.add(" ");
+            merchantLore.add(ChatColor.GRAY + "Click to redeem this kit.");
+            merchantLore.add(" ");
+            merchantLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "Unlocked");
+            merchantMeta.setLore(merchantLore);
+            merchant.setItemMeta(merchantMeta);
+
+            ItemStack industrialist = new ItemStack(Material.INK_SACK, 1, (short) 14);
+            ItemMeta industrialistMeta = industrialist.getItemMeta();
+            industrialistMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Kit Industrialist");
+            ArrayList<String> industrialistLore = new ArrayList<String>();
+            industrialistLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/40" + ChatColor.GRAY + " and complete ");
+            industrialistLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            industrialistMeta.setLore(industrialistLore);
+            industrialist.setItemMeta(industrialistMeta);
+
+            ItemStack engineer = new ItemStack(Material.INK_SACK, 1, (short) 1);
+            ItemMeta engineerMeta = engineer.getItemMeta();
+            engineerMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Kit Engineer");
+            ArrayList<String> engineerLore = new ArrayList<String>();
+            engineerLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/65" + ChatColor.GRAY + " and complete ");
+            engineerLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            engineerMeta.setLore(engineerLore);
+            engineer.setItemMeta(engineerMeta);
+
+            kit.setItem(1, farmer);
+            kit.setItem(2, merchant);
+            kit.setItem(3, industrialist);
+            kit.setItem(4, engineer);
+
+        } else if (perms.getInt("Rank." + p.getUniqueId().toString()) == 3) {
+
+            ItemStack farmer = new ItemStack(Material.INK_SACK, 1, (short) 2);
+            ItemMeta farmerMeta = farmer.getItemMeta();
+            farmerMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Farmer");
+            ArrayList<String> farmerLore = new ArrayList<String>();
+            farmerLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/15" + ChatColor.GRAY + " and complete ");
+            farmerLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            farmerMeta.setLore(farmerLore);
+            farmer.setItemMeta(farmerMeta);
+
+            ItemStack merchant = new ItemStack(Material.INK_SACK, 1, (short) 11);
+            ItemMeta merchantMeta = merchant.getItemMeta();
+            merchantMeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Kit Merchant");
+            ArrayList<String> merchantLore = new ArrayList<String>();
+            farmerLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/25" + ChatColor.GRAY + " and complete ");
+            farmerLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            merchantMeta.setLore(merchantLore);
+            merchant.setItemMeta(merchantMeta);
+
+            ItemStack industrialist = new ItemStack(Material.INK_SACK, 1, (short) 14);
+            ItemMeta industrialistMeta = industrialist.getItemMeta();
+            industrialistMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Kit Industrialist");
+            ArrayList<String> industrialistLore = new ArrayList<String>();
+            industrialistLore.add(ChatColor.GRAY + "You already have access to this kit.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.GRAY + "Click to redeem this kit.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "Unlocked");
+            industrialistMeta.setLore(industrialistLore);
+            industrialist.setItemMeta(industrialistMeta);
+
+            ItemStack engineer = new ItemStack(Material.INK_SACK, 1, (short) 1);
+            ItemMeta engineerMeta = engineer.getItemMeta();
+            engineerMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Kit Engineer");
+            ArrayList<String> engineerLore = new ArrayList<String>();
+            engineerLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/65" + ChatColor.GRAY + " and complete ");
+            engineerLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            engineerMeta.setLore(engineerLore);
+            engineer.setItemMeta(engineerMeta);
+
+            kit.setItem(1, farmer);
+            kit.setItem(2, merchant);
+            kit.setItem(3, industrialist);
+            kit.setItem(4, engineer);
+
+        } else if (perms.getInt("Rank." + p.getUniqueId().toString()) == 4) {
+
+            ItemStack farmer = new ItemStack(Material.INK_SACK, 1, (short) 2);
+            ItemMeta farmerMeta = farmer.getItemMeta();
+            farmerMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Farmer");
+            ArrayList<String> farmerLore = new ArrayList<String>();
+            farmerLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/15" + ChatColor.GRAY + " and complete ");
+            farmerLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            farmerLore.add(" ");
+            farmerLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            farmerMeta.setLore(farmerLore);
+            farmer.setItemMeta(farmerMeta);
+
+            ItemStack merchant = new ItemStack(Material.INK_SACK, 1, (short) 11);
+            ItemMeta merchantMeta = merchant.getItemMeta();
+            merchantMeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Kit Merchant");
+            ArrayList<String> merchantLore = new ArrayList<String>();
+            merchantLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            merchantLore.add(" ");
+            merchantLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/25" + ChatColor.GRAY + " and complete ");
+            merchantLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            merchantLore.add(" ");
+            merchantLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            merchantMeta.setLore(merchantLore);
+            merchant.setItemMeta(merchantMeta);
+
+            ItemStack industrialist = new ItemStack(Material.INK_SACK, 1, (short) 14);
+            ItemMeta industrialistMeta = industrialist.getItemMeta();
+            industrialistMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Kit Industrialist");
+            ArrayList<String> industrialistLore = new ArrayList<String>();
+            industrialistLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/40" + ChatColor.GRAY + " and complete ");
+            industrialistLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            industrialistLore.add(" ");
+            industrialistLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            industrialistMeta.setLore(industrialistLore);
+            industrialist.setItemMeta(industrialistMeta);
+
+            ItemStack engineer = new ItemStack(Material.INK_SACK, 1, (short) 1);
+            ItemMeta engineerMeta = engineer.getItemMeta();
+            engineerMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Kit Engineer");
+            ArrayList<String> engineerLore = new ArrayList<String>();
+            engineerLore.add(ChatColor.GRAY + "You already have access to this kit.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.GRAY + "Click to redeem this kit.");
+            engineerLore.add(" ");
+            engineerLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "Unlocked");
+            engineerMeta.setLore(engineerLore);
+            engineer.setItemMeta(engineerMeta);
+
+            kit.setItem(1, farmer);
+            kit.setItem(2, merchant);
+            kit.setItem(3, industrialist);
+            kit.setItem(4, engineer);
+
+        }
+
+        if (perms.getInt("DragonKit." + p.getUniqueId().toString()) == 0) {
+
+            ItemStack dragon = new ItemStack(Material.INK_SACK, 1, (short) 1);
+            ItemMeta dragonMeta = dragon.getItemMeta();
+            dragonMeta.setDisplayName(ChatColor.DARK_RED + "" + ChatColor.BOLD + "Kit Dragon");
+            ArrayList<String> dragonLore = new ArrayList<String>();
+            dragonLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            dragonLore.add(" ");
+            dragonLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/35" + ChatColor.GRAY + " and complete ");
+            dragonLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            dragonLore.add(" ");
+            dragonLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            dragonLore.add(ChatColor.GRAY + "Added in celebration of the 8th of February.");
+            dragonMeta.setLore(dragonLore);
+            dragon.setItemMeta(dragonMeta);
+
+            kit.setItem(18, dragon);
+
+        } else if (perms.getInt("DragonKit." + p.getUniqueId().toString()) == 1) {
+
+            ItemStack dragon = new ItemStack(Material.INK_SACK, 1, (short) 1);
+            ItemMeta dragonMeta = dragon.getItemMeta();
+            dragonMeta.setDisplayName(ChatColor.DARK_RED + "" + ChatColor.BOLD + "Kit Dragon");
+            ArrayList<String> dragonLore = new ArrayList<String>();
+            dragonLore.add(ChatColor.GRAY + "You already have access to this kit.");
+            dragonLore.add(" ");
+            dragonLore.add(ChatColor.GRAY + "Click to redeem this kit.");
+            dragonLore.add(" ");
+            dragonLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "Unlocked");
+            dragonLore.add(ChatColor.GRAY + "Added in celebration of the 8th of February");
+            dragonMeta.setLore(dragonLore);
+            dragon.setItemMeta(dragonMeta);
+
+            kit.setItem(18, dragon);
+
+        }
+
+        if (perms.getInt("LeprechaunKit." + p.getUniqueId().toString()) == 0) {
+
+            ItemStack leprechaun = new ItemStack(Material.INK_SACK, 1, (short) 2);
+            ItemMeta leprechaunMeta = leprechaun.getItemMeta();
+            leprechaunMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Leprechaun");
+            ArrayList<String> leprechaunLore = new ArrayList<String>();
+            leprechaunLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            leprechaunLore.add(" ");
+            leprechaunLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/34" + ChatColor.GRAY + " and complete ");
+            leprechaunLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            leprechaunLore.add(" ");
+            leprechaunLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            leprechaunLore.add(ChatColor.GRAY + "Added in celebration of the 17th of March");
+            leprechaunMeta.setLore(leprechaunLore);
+            leprechaun.setItemMeta(leprechaunMeta);
+
+            kit.setItem(19, leprechaun);
+
+        } else if (perms.getInt("LeprechaunKit." + p.getUniqueId().toString()) == 1) {
+
+            ItemStack leprechaun = new ItemStack(Material.INK_SACK, 1, (short) 2);
+            ItemMeta leprechaunMeta = leprechaun.getItemMeta();
+            leprechaunMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Leprechaun");
+            ArrayList<String> leprechaunLore = new ArrayList<String>();
+            leprechaunLore.add(ChatColor.GRAY + "You already have access to this kit.");
+            leprechaunLore.add(" ");
+            leprechaunLore.add(ChatColor.GRAY + "Click to redeem this kit.");
+            leprechaunLore.add(" ");
+            leprechaunLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "Unlocked");
+            leprechaunLore.add(ChatColor.GRAY + "Added in celebration of the 17th of March");
+            leprechaunMeta.setLore(leprechaunLore);
+            leprechaun.setItemMeta(leprechaunMeta);
+
+            kit.setItem(19, leprechaun);
+
+        }
+
+        if (perms.getInt("GhoulKit." + p.getUniqueId().toString()) == 0) {
+
+            ItemStack ghoul = new ItemStack(Material.INK_SACK, 1, (short) 5);
+            ItemMeta ghoulMeta = ghoul.getItemMeta();
+            ghoulMeta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Kit Ghoul");
+            ArrayList<String> ghoulLore = new ArrayList<String>();
+            ghoulLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            ghoulLore.add(" ");
+            ghoulLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/32" + ChatColor.GRAY + " and complete ");
+            ghoulLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            ghoulLore.add(" ");
+            ghoulLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            ghoulLore.add(ChatColor.GRAY + "Added in celebration of the 31st of October");
+            ghoulMeta.setLore(ghoulLore);
+            ghoul.setItemMeta(ghoulMeta);
+
+            kit.setItem(20, ghoul);
+
+        } else if (perms.getInt("GhoulKit." + p.getUniqueId().toString()) == 1) {
+
+            ItemStack ghoul = new ItemStack(Material.INK_SACK, 1, (short) 5);
+            ItemMeta ghoulMeta = ghoul.getItemMeta();
+            ghoulMeta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Kit Ghoul");
+            ArrayList<String> ghoulLore = new ArrayList<String>();
+            ghoulLore.add(ChatColor.GRAY + "You already have access to this kit.");
+            ghoulLore.add(" ");
+            ghoulLore.add(ChatColor.GRAY + "Click to redeem this kit.");
+            ghoulLore.add(" ");
+            ghoulLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "Unlocked");
+            ghoulLore.add(ChatColor.GRAY + "Added in celebration of the 31st of October");
+            ghoulMeta.setLore(ghoulLore);
+            ghoul.setItemMeta(ghoulMeta);
+
+            kit.setItem(20, ghoul);
+
+        }
+
+        if (perms.getInt("SnowflakeKit." + p.getUniqueId().toString()) == 0) {
+
+            ItemStack snowflake = new ItemStack(Material.INK_SACK, 1, (short) 7);
+            ItemMeta snowflakeMeta = snowflake.getItemMeta();
+            snowflakeMeta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Kit Snowflake");
+            ArrayList<String> snowflakeLore = new ArrayList<String>();
+            snowflakeLore.add(ChatColor.GRAY + "You do not have access to this kit.");
+            snowflakeLore.add(" ");
+            snowflakeLore.add(ChatColor.GRAY + "Go to " + ChatColor.UNDERLINE + "paypal.me/VarianceFactions/36" + ChatColor.GRAY + " and complete ");
+            snowflakeLore.add(ChatColor.GRAY + "the purchase to receive this rank.");
+            snowflakeLore.add(" ");
+            snowflakeLore.add(ChatColor.RED + "" + ChatColor.BOLD + "Locked");
+            snowflakeLore.add(ChatColor.GRAY + "Added in celebration of the 25th of December");
+            snowflakeMeta.setLore(snowflakeLore);
+            snowflake.setItemMeta(snowflakeMeta);
+
+            kit.setItem(21, snowflake);
+
+        } else if (perms.getInt("SnowflakeKit." + p.getUniqueId().toString()) == 1) {
+
+            ItemStack snowflake = new ItemStack(Material.INK_SACK, 1, (short) 7);
+            ItemMeta snowflakeMeta = snowflake.getItemMeta();
+            snowflakeMeta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Kit Snowflake");
+            ArrayList<String> snowflakeLore = new ArrayList<String>();
+            snowflakeLore.add(ChatColor.GRAY + "You already have access to this kit.");
+            snowflakeLore.add(" ");
+            snowflakeLore.add(ChatColor.GRAY + "Click to redeem this kit.");
+            snowflakeLore.add(" ");
+            snowflakeLore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "Unlocked");
+            snowflakeLore.add(ChatColor.GRAY + "Added in celebration of the 25th of December");
+            snowflakeMeta.setLore(snowflakeLore);
+            snowflake.setItemMeta(snowflakeMeta);
+
+            kit.setItem(21, snowflake);
+
+        }
+
+        p.openInventory(kit);
+
+    }
+
+}
